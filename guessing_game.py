@@ -15,10 +15,9 @@ def start_game():
     game_round = 0
     high_score = None
     guess_counter = 1
-    num_rand = random.randint(1, 10)
 
     while game_on:
-
+        num_rand = random.randint(1, 10)
         try:
             print("\n" + ">" * 5 + " ATTEMPT {} ".format(guess_counter) + "<" * 5)
             num_guess = int(input("\nPick a number between 1 and 10: "))
