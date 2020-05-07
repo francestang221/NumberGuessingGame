@@ -11,60 +11,57 @@ def start_game():
     # Welcome message
     print("-" * 39 + "\n Welcome to the Number Guessing Game! \n" + "-" * 39)
 
-    try:
-        guess_msg = "Pick a number between 1 and 10: "
-        guess_counter =1
-        attempt = 1
+    game_on = True
+    game_round = 0
+    high_score = None
+    guess_counter = 1
+    num_rand = random.randint(1, 10)
 
-        while guess_counter > 0:
-            num_rand = random.randint(1, 10)
-            num_guess = int(input(guess_msg))
-            if num_guess > 10 or num_guess < 1:
-                raise ValueError("Your guess is out of range. Please pick a number between 1 and 10 next time.")
+    while game_on:
 
-            guess_counter = 1
-            
-            while num_guess != num_rand:
-                if num_guess > num_rand:
-                    print("It's lower")
-                    num_guess = int(input(guess_msg))
-                    if num_guess > 10 or num_guess < 1:
-                        raise ValueError("Your guess is out of range. Please pick a number between 1 and 10 next time.")
+        try:
+            print("\n" + ">" * 5 + " ATTEMPT {} ".format(guess_counter) + "<" * 5)
+            num_guess = int(input("\nPick a number between 1 and 10: "))
 
+            if num_guess != num_rand:
+                if num_guess > 10 or num_guess < 1:
+                    guess_counter += 1
+                    print("\nYour guess was out of range. Please pick a number between 1 and 10. ")
+
+                elif num_guess > num_rand:
+                    print("\nIt's lower. Try again.")
+                    guess_counter += 1
                 elif num_guess < num_rand:
-                    print("It's higher")
-                    num_guess = int(input(guess_msg))
-                    if num_guess > 10 or num_guess < 1:
-                        raise ValueError("Your guess is out of range. Please pick a number between 1 and 10 next time.")
-                guess_counter += 1
+                    print("\nIt's higher. Try again.")
+                    guess_counter += 1
+                    continue
 
-            if num_guess == num_rand:
-                    print("You got it! It took you {} tries. ".format(guess_counter))
-                    
-            if attempt == 1:
-                high_score = guess_counter
-            
-            if attempt > 1:
-                if guess_counter < high_score:
+            elif num_guess == num_rand:
+                print("\n WOO-HOO! You got it! It took you {} tries. ".format(guess_counter))
+                game_round += 1
+                if game_round == 1:
                     high_score = guess_counter
-            
-            try_again = input("Would you like to try again?  [y]es/[n]o: ")
 
-            if try_again == 'y':
-                print("the HIGHSCORE IS {} ".format(high_score))
-                attempt += 1
-                continue
-            elif try_again == 'n':
-                print("Closing game...see you next time! ")
-                break
-            else:
-                raise ValueError("Please enter the letter 'n' or 'y'")
+                if game_round > 1:
+                    if guess_counter < high_score:
+                        high_score = guess_counter
 
-    except ValueError as err:
-        print("Invalid Value. Try again!")
-        print("({}) ".format(err))
+                try_again = input("\nOne more round? press 'y' to continue, or any other key to quit: ").lower()
 
+                if try_again == 'y':
+                    print("\nYOUR BEST RECORD IS {} TRIES ".format(high_score))
+                    guess_counter = 1
+                    game_round += 1
+                    continue
+
+                else:
+                    print("\n Closing game...see you next time! ")
+                    game_on = False
+
+        except ValueError:
+            print("\n Oops! That was not a valid guess. Please enter a number.")
 
 # Kick off the program by calling the start_game function
+
 
 start_game()
