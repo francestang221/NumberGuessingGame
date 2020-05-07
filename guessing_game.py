@@ -50,6 +50,7 @@ def start_game():
                 continue
             else:
                 print("Closing game...see you next time! ")
+                break
 
     except ValueError as err:
         print("Invalid Value. Try again!")
