@@ -15,9 +15,9 @@ def start_game():
     game_round = 0
     high_score = None
     guess_counter = 1
+    num_rand = random.randint(1, 10)
 
     while game_on:
-        num_rand = random.randint(1, 10)
         try:
             print("\n" + ">" * 5 + " ATTEMPT {} ".format(guess_counter) + "<" * 5)
             num_guess = int(input("\nPick a number between 1 and 10: "))
@@ -51,6 +51,7 @@ def start_game():
                     print("\nYOUR BEST RECORD IS {} TRIES ".format(high_score))
                     guess_counter = 1
                     game_round += 1
+                    num_rand = random.randint(1, 10)
                     continue
 
                 else:
@@ -59,8 +60,9 @@ def start_game():
 
         except ValueError:
             print("\n Oops! That was not a valid guess. Please enter a number.")
+            guess_counter += 1
+
 
 # Kick off the program by calling the start_game function
-
 
 start_game()
